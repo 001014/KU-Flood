@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00693E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="KU Flood">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="KU Flood">
+<link rel="manifest" href="manifest.webmanifest">
+
+<title>KU Flood · Prototype</title>
+<link rel="icon" type="image/png" href="favicon-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#00693E;--gl:#e6f2ec;--bg:#fff;--tx:#17231d;--mu:#6b7a72;--ln:#e5ebe7;--ok:#1f9d55;--wn:#e0a100;--fl:#2f7fd0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+html{height:100%;background:#eef2ef;color-scheme:light;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{height:100%;background:#eef2ef;color:#17231d;font-family:'Noto Sans Thai','Sarabun',Tahoma,system-ui,sans-serif;font-size:16px}
+button,select,input{color:inherit;font-family:inherit}
+#app{width:100%;max-width:420px;height:100%;margin:0 auto;display:flex;flex-direction:column;background:#fff;color:#17231d;overflow:hidden}
+@media(min-width:500px){body{display:flex;align-items:center;justify-content:center}#app{height:min(820px,94vh);border-radius:38px;border:9px solid #17231d;box-shadow:0 12px 40px rgba(0,0,0,.2)}}
+.top{padding:14px 18px 12px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00693E,#1d8a58);color:#fff}
+.top img{flex:none;width:40px;height:40px;border-radius:10px}.top b{font-size:21px;color:#fff;display:block;line-height:1.1}.top small{color:rgba(255,255,255,.85);font-size:13px}
+.tag{margin-left:auto;font-size:11px;background:rgba(255,255,255,.2);color:#fff;padding:3px 9px;border-radius:99px}
+main{flex:1;overflow-y:auto;padding:16px 18px;background:linear-gradient(#e3f1e9,#fff 220px)}
+.hello{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#00693E,#2f9a63);color:#fff;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,105,62,.25)}.hello .em{font-size:42px;line-height:1}
+.hello b{display:block;color:#fff;font-size:17px}.hello span{color:rgba(255,255,255,.92);font-size:14px}
+.cnt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.cnt div{border-radius:14px;padding:10px 6px;text-align:center;background:#fff;border:1.5px solid var(--ln)}.cnt .e{font-size:20px;display:block}
+.cnt b{font-size:24px;display:block;line-height:1.2}.cnt span{font-size:13px;color:#44534b}
+.upd{font-size:13px;color:#5b6a62;margin:6px 0 12px}
+.map{border:1.5px solid #bfe3cd;border-radius:18px;padding:4px;background:#f1f9f4}
+.map svg{width:100%;display:block}
+.leg{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#44534b;margin:10px 0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.card{border:1px solid var(--ln);border-radius:14px;padding:14px;margin-top:10px}
+.card h3{font-size:15px;margin-bottom:4px}.card p{color:#44534b;font-size:14px}
+h2{font-size:17px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mu);margin:12px 0 5px}
+select,input[type=range]{width:100%}
+select{padding:10px;border:1px solid var(--ln);border-radius:10px;font:inherit;background:#fff}
+input[type=range]{accent-color:var(--g)}
+.btn{display:block;width:100%;margin-top:16px;padding:12px;border:0;border-radius:12px;background:var(--g);color:#fff;font:inherit;font-weight:500;cursor:pointer}
+.chip{display:inline-block;margin:0 6px 8px 0;padding:8px 12px;border:1px solid var(--g);color:var(--g);border-radius:99px;font-size:13px;background:#fff;font:inherit;font-size:13px;cursor:pointer}
+.opt{display:block;width:100%;text-align:left;margin-top:8px;padding:10px 12px;border:1px solid var(--ln);border-radius:10px;background:#fff;font:inherit;cursor:pointer}
+.opt.right{border-color:var(--ok);background:#eaf6ee}.opt.wrong{border-color:#d33;background:#fdeeee}
+.step{padding:8px 0;border-bottom:1px dashed var(--ln);font-size:14px}
+nav{display:flex;border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px);background:#fff}
+nav button{flex:1;border:0;background:none;padding:9px 0 8px;font:inherit;font-size:12px;color:#5b6a62;cursor:pointer}
+nav button i{display:inline-block;font-style:normal;font-size:20px;padding:2px 10px;border-radius:14px;opacity:.75}
+nav button.on{color:var(--g);font-weight:700}nav button.on i{background:var(--gl);opacity:1}
+.map{position:relative}.map svg{touch-action:none;cursor:grab;border-radius:14px}
+.zc{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}
+.zc button{width:38px;height:38px;border:0;border-radius:12px;background:#fff;color:var(--g);font-size:20px;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.18);cursor:pointer}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln)}.row:last-child{border:0}.row b{font-weight:500;display:block}.row small{color:#5b6a62;font-size:12.5px}
+.sw{position:relative;flex:none;width:48px;height:28px;border-radius:99px;background:#cfd8d3;border:0;cursor:pointer;padding:0}.sw::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}.sw.on{background:var(--g)}.sw.on::after{left:23px}
+.seg{display:flex;background:var(--gl);border-radius:10px;padding:3px}.seg button{border:0;background:none;padding:6px 11px;border-radius:8px;font-size:13px;cursor:pointer}.seg button.on{background:var(--g);color:#fff}
+.sec{font-size:14px;color:var(--g);font-weight:700;margin:18px 0 6px}
+.chip.on{background:var(--g);color:#fff}
+.faces{display:flex;justify-content:space-between;gap:6px}.faces button{flex:1;font-size:28px;padding:8px 0;border:1.5px solid var(--ln);border-radius:12px;background:#fff;cursor:pointer;filter:grayscale(.8);opacity:.7}.faces button.on{border-color:var(--g);background:var(--gl);filter:none;opacity:1}
+.opt.on{border-color:var(--g);background:var(--gl);font-weight:500}
+textarea{width:100%;min-height:80px;padding:10px;border:1px solid var(--ln);border-radius:10px;font:inherit;resize:vertical;color:inherit;background:#fff}
+.sv q{display:block;font-weight:500;margin:16px 0 4px;quotes:none}
+.scs{margin-bottom:10px}.scs button{flex:1;padding:7px 2px;font-size:12px;white-space:nowrap}
+.fx{position:absolute;inset:4px;border-radius:14px;pointer-events:none;overflow:hidden}
+.fx.r1{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='80'%3E%3Cpath d='M12 10l-3 14M44 46l-3 14' stroke='%232f7fd0' stroke-width='1.2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");background-size:60px 80px;opacity:.55;animation:rn1 1.8s linear infinite}
+.fx.r2{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='60'%3E%3Cpath d='M10 6l-3 14M32 4l-3 14M22 34l-3 14M42 38l-3 14' stroke='%232f7fd0' stroke-width='1.4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");background-size:50px 60px;opacity:.7;animation:rn2 .8s linear infinite}
+.fx.r3{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='50'%3E%3Cpath d='M14 4l-9 16M34 8l-9 16M22 28l-9 16M38 32l-9 16' stroke='%232f7fd0' stroke-width='1.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");background-size:40px 50px;opacity:.85;animation:rn3 .5s linear infinite;background-color:rgba(23,35,29,.12)}
+.fx.r3::after{content:'';position:absolute;inset:0;background:#fff;opacity:0;animation:fl 6s infinite}
+@keyframes rn1{to{background-position:0 80px}}@keyframes rn2{to{background-position:0 60px}}@keyframes rn3{to{background-position:0 50px}}
+@keyframes fl{0%,91%,100%{opacity:0}92%{opacity:.6}93%{opacity:0}94%{opacity:.4}96%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.fx,.fx::after{animation:none}}
+
+.pg{height:8px;border-radius:99px;background:var(--gl);overflow:hidden;margin:-4px 0 12px}.pg i{display:block;height:100%;background:var(--g);border-radius:99px;transition:width .3s}
+.cf{position:relative;overflow:hidden;text-align:center;background:linear-gradient(#e8f6ee,#fff);border:1.5px solid #bfe3cd;border-radius:22px;padding:28px 16px 20px}
+.cf i.p{position:absolute;top:-16px;width:8px;height:12px;border-radius:2px;opacity:.9;animation:cfd 3.2s linear infinite}
+@keyframes cfd{to{transform:translateY(480px) rotate(540deg)}}
+.cf img{width:104px;height:104px;border-radius:26px;box-shadow:0 8px 20px rgba(0,105,62,.3);animation:bn 1.5s ease-in-out infinite}
+@keyframes bn{50%{transform:translateY(-8px) rotate(-3deg)}}
+.cf h2{font-size:22px;margin:14px 0 2px}.cf .sc{font-size:44px;font-weight:700;color:var(--g);line-height:1.1}.cf .sc small{font-size:18px;color:var(--mu);font-weight:500}
+.bdg{display:inline-block;background:var(--g);color:#fff;border-radius:99px;padding:6px 16px;font-weight:700;margin:10px 0 6px}
+.stars{font-size:19px;letter-spacing:2px;margin:6px 0}
+@media(prefers-reduced-motion:reduce){.cf i.p,.cf img{animation:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="top">
+    <img id="logo" src="data:image/png;base64,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" alt="KU Flood" width="40" height="40">
+    <div><b>KU Flood</b><small>เกษตรศาสตร์ บางเขน</small></div>
+    <span class="tag">Prototype · ข้อมูลจำลอง</span>
+  </div>
+  <main id="main"></main>
+  <nav id="nav"></nav>
+</div>
+<script>
+const ICON=document.getElementById('logo').src;
+const N=[
+{id:0,n:'หอพักนิสิต',x:50,y:90,lv:0},{id:1,n:'ตึกอำนวยการ',x:170,y:60,lv:0},{id:2,n:'ประตูพหลโยธิน',x:285,y:35,lv:0},
+{id:3,n:'หอสมุดกลาง',x:170,y:150,lv:0},{id:4,n:'อาคารเรียนรวม',x:262,y:165,lv:9},{id:5,n:'ศูนย์อาหารกลาง',x:95,y:215,lv:22},
+{id:6,n:'สนามกีฬา',x:175,y:245,lv:6},{id:7,n:'โรงเรียนสาธิต',x:268,y:260,lv:0},{id:8,n:'ประตูงามวงศ์วาน',x:50,y:275,lv:0}];
+const E=[[0,1],[1,2],[1,3],[3,4],[2,4],[0,5],[3,5],[3,6],[5,6],[5,8],[8,6],[6,7],[4,7]];
+let TH=15;const st=l=>l>=TH?'f':l>=1?'w':'o';
+const col={o:'var(--ok)',w:'var(--wn)',f:'var(--fl)'};
+const name={o:'ผ่านได้',w:'เฝ้าระวัง',f:'ท่วมขัง'};
+let Z=1,VX=0,VY=0,moved=false,mv=0;const W=340,H=310,S={nf:true,nw:false,snd:true,faces:true,home:5,fs:1,fx:true,sc:'now'};
+let tab=0,sel=null,upd='18:12',qi=0,score=0,done=false;
+const N0=N.map(n=>n.lv);let LIVE=null;
+const SC={
+ now:{n:'ล่าสุด',e:'📡',cls:''},
+ light:{n:'ฝนเบา',e:'🌦️',mm:'ไม่เกิน 10 มม./ชม.',d:'ฝนตกปรอย ๆ ระบายน้ำทัน มีน้ำขังเล็กน้อยตามจุดที่ต่ำ',tip:'พกร่มก็พอ เดินตามปกติ แต่ระวังพื้นลื่น',cls:'r1',lv:[0,0,0,0,3,8,2,0,0]},
+ heavy:{n:'ฝนตกหนัก',e:'🌧️',mm:'35–70 มม./ชม.',d:'น้ำระบายไม่ทัน ถนนและลานหลายจุดเริ่มท่วมขัง',tip:'เลี่ยงจุดสีฟ้า รอให้ฝนซา และเก็บของมีค่าให้พ้นพื้น',cls:'r2',lv:[0,3,0,9,18,32,15,6,2]},
+ storm:{n:'พายุ',e:'⛈️',mm:'มากกว่า 90 มม./ชม. · ลมกระโชกแรง',d:'ฝนหนักมากพร้อมลมแรง น้ำท่วมขังเกือบทั่วพื้นที่ อาจมีไฟฟ้าดับ',tip:'อยู่ในอาคาร ห่างจากหน้าต่างและต้นไม้ใหญ่ งดเดินลุยน้ำ',cls:'r3',lv:[7,14,5,24,36,45,32,22,13]}};
+function setSc(k){
+ if(S.sc=='now')LIVE=N.map(n=>n.lv);
+ S.sc=k;const a=k=='now'?(LIVE||N0):SC[k].lv;N.forEach((n,i)=>n.lv=a[i]);
+ upd=new Date().getHours()+':'+String(new Date().getMinutes()).padStart(2,'0');sel=null;draw()}
+const tabs=[['แผนที่','🗺️'],['รายงาน','➕'],['ขอช่วย','🆘'],['Buddy','☂️'],['ทดสอบ','📝'],['ตั้งค่า','⚙️']];
+const cnt=()=>({o:N.filter(n=>st(n.lv)=='o').length,w:N.filter(n=>st(n.lv)=='w').length,f:N.filter(n=>st(n.lv)=='f').length});
+
+function mapView(){
+ const c=cnt(),s=sel!=null?N[sel]:null,sc=SC[S.sc];
+ const msg=(S.sc=='storm'?'⚠️ พายุเข้า · ':'')+(c.f?`มีจุดท่วมขัง ${c.f} จุด หลีกเลี่ยงก่อนนะ`:c.w?`ฝนเบา ๆ แต่มีจุดต้องระวัง ${c.w} จุด`:'ตอนนี้ทุกจุดผ่านได้ปกติ');
+ const edges=E.map(([a,b])=>{const f=st(N[a].lv)=='f'||st(N[b].lv)=='f';return `<line x1="${N[a].x}" y1="${N[a].y}" x2="${N[b].x}" y2="${N[b].y}" stroke="${f?'#9cc3ec':'#dfe7e2'}" stroke-width="${f?3:6}" ${f?'stroke-dasharray="2 5" stroke-linecap="round"':''}/>`}).join('');
+ const nodes=N.map(n=>`<g onclick="pick(${n.id})" style="cursor:pointer"><circle cx="${n.x}" cy="${n.y}" r="${sel==n.id?16:13}" fill="${col[st(n.lv)]}" stroke="#fff" stroke-width="3"/>${S.faces?`<text x="${n.x}" y="${n.y+5}" font-size="14" text-anchor="middle">${{o:"😊",w:"😐",f:"😟"}[st(n.lv)]}</text>`:""}<text x="${n.x}" y="${n.y+26}" font-size="11.5" font-weight="500" text-anchor="middle" fill="#17231d">${S.home==n.id?"⭐ ":""}${n.n}</text>${n.lv?`<text x="${n.x}" y="${n.y+39}" font-size="11" text-anchor="middle" font-weight="700" fill="${col[st(n.lv)]}">${n.lv} ซม.</text>`:''}</g>`).join('');
+ return `<div class="hello"><div class="em">${S.sc=='now'?'💧':sc.e}</div><div><b>สวัสดีเพื่อนเกษตร 🌱</b><span>${msg}</span></div></div>
+ <div class="seg scs">${Object.entries(SC).map(([k,v])=>`<button class="${S.sc==k?'on':''}" onclick="setSc('${k}')">${v.e} ${v.n}</button>`).join('')}</div>${S.sc!='now'?`<div class="card" style="margin:0 0 12px"><h3>${sc.e} ${sc.n} · ${sc.mm}</h3><p>${sc.d}</p><p style="margin-top:4px;color:var(--tx)">💡 ${sc.tip}</p></div>`:''}
+ <div class="cnt"><div style="background:#eaf3fc;border-color:#cfe2f6"><span class="e">🌊</span><b style="color:var(--fl)">${c.f}</b><span>ท่วมขัง</span></div><div style="background:#fff7e0;border-color:#f4e2a8"><span class="e">⚠️</span><b style="color:#b98400">${c.w}</b><span>เฝ้าระวัง</span></div><div style="background:#e8f6ee;border-color:#bfe3cd"><span class="e">😊</span><b style="color:var(--ok)">${c.o}</b><span>ผ่านได้</span></div></div>
+ <div class="upd">อัปเดตล่าสุด ${upd} น. · ${S.sc=='now'?'จากรายงานผู้ใช้':'จำลองสถานการณ์'+sc.n} (ข้อมูลจำลอง)</div>
+ <div class="map"><svg id="msv" viewBox="${VX} ${VY} ${W/Z} ${H/Z}">${edges}${nodes}</svg>${S.fx&&sc.cls?`<div class="fx ${sc.cls}"></div>`:''}<div class="zc"><button onclick="zoomBtn(1.4)">+</button><button onclick="zoomBtn(1/1.4)">−</button><button onclick="zoomBtn(0)" style="font-size:16px">⟲</button></div></div>
+ <div class="leg"><span><i class="dot" style="background:var(--ok)"></i>ผ่านได้</span><span><i class="dot" style="background:var(--wn)"></i>เฝ้าระวัง 1–${TH-1} ซม.</span><span><i class="dot" style="background:var(--fl)"></i>ท่วมขัง ${TH} ซม.ขึ้นไป</span></div>
+ ${s?`<div class="card"><h3>${s.n}</h3><p>${name[st(s.lv)]} · น้ำสูง ${s.lv} ซม.</p><button class="chip" style="margin:10px 0 0" onclick="goFeed(${s.id})">👥 ดูรายงานในพื้นที่นี้ (${R.filter(r=>r.node==s.id).length})</button></div>`:'<p class="upd">👆 แตะจุดบนแผนที่เพื่อดูรายละเอียด · แผนผังจำลอง ไม่ใช่แผนที่จริง</p>'}`;
+}
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let FV='new',FA=-1,FM='';const OP=new Set(),RF={node:0,lv:10,img:null,note:''};
+const R=[
+{id:1,node:5,lv:22,user:'น้องใบไม้ 🌿',time:'18:05',note:'น้ำเข้าศูนย์อาหารแล้ว เดินลำบากเลย',img:{t:'scene',lv:22}},
+{id:2,node:5,lv:20,user:'พี่ต้นกล้า 🌱',time:'17:50',note:'ทางเข้าฝั่งตะวันออกน้ำสูงถึงข้อเท้า',img:{t:'scene',lv:20}},
+{id:3,node:4,lv:9,user:'น้องข้าวหอม 🍚',time:'17:40',note:'น้ำขังเล็กน้อยหน้าตึก',img:{t:'scene',lv:9}},
+{id:4,node:6,lv:6,user:'พี่ฟ้าใส ☀️',time:'17:30',note:'สนามเริ่มมีน้ำขัง ยังเดินได้',img:{t:'scene',lv:6}},
+{id:5,node:2,lv:0,user:'น้องมะลิ 🌼',time:'17:15',note:'ประตูปกติ รถผ่านได้',img:null},
+{id:6,node:8,lv:0,user:'พี่ภูผา ⛰️',time:'16:55',note:'',img:{t:'scene',lv:0}}];
+function scene(lv){const h=Math.min(95,18+lv*3.4),y=150-h;
+ return `<svg viewBox="0 0 300 150" style="width:100%;display:block"><rect width="300" height="150" fill="#dff0e6"/><rect x="20" y="30" width="70" height="80" fill="#9db8a8"/><rect x="200" y="50" width="80" height="60" fill="#b4c9bc"/><rect y="110" width="300" height="40" fill="#8a9a92"/>${lv?`<rect y="${y}" width="300" height="${h}" fill="#2f7fd0" opacity=".55"/><path d="M0 ${y}q15-6 30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0" stroke="#fff" fill="none" opacity=".7"/>`:''}<text x="290" y="22" font-size="15" text-anchor="end" font-weight="700" fill="#17231d">${lv} ซม.</text></svg>`}
+function reportView(){
+ const seg=`<div class="seg" style="margin-bottom:14px">${[['new','✍️ แจ้งเอง'],['feed','👥 จากเพื่อนๆ ('+R.length+')']].map(([k,t])=>`<button style="flex:1" class="${FV==k?'on':''}" onclick="FV='${k}';draw()">${t}</button>`).join('')}</div>`;
+ return seg+(FV=='new'?formView():feedView());
+}
+function formView(){
+ return `<h2>📣 แจ้งระดับน้ำ</h2><label>สถานที่</label><select onchange="RF.node=+this.value">${N.map(n=>`<option value="${n.id}" ${RF.node==n.id?'selected':''}>${n.n}</option>`).join('')}</select>
+ <label>ระดับน้ำ: <b id="rv">${RF.lv}</b> ซม.</label><input type="range" min="0" max="40" value="${RF.lv}" oninput="RF.lv=+this.value;rv.textContent=this.value">
+ <label>รูปภาพ (ไม่บังคับ)</label><label class="chip" style="display:inline-block;margin:0;cursor:pointer;color:var(--g)">📷 แนบรูป<input type="file" accept="image/*" hidden onchange="pickImg(this)"></label><div id="pv"></div>
+ <label>รายละเอียด</label><textarea placeholder="เช่น น้ำสูงถึงข้อเท้า เดินลำบาก" oninput="RF.note=this.value">${esc(RF.note)}</textarea>
+ <button class="btn" onclick="sendRep()">ส่งรายงาน 🚀</button>`;
+}
+function pickImg(inp){const f=inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);RF.img=c.toDataURL('image/jpeg',.8);prev()};im.src=rd.result};rd.readAsDataURL(f)}
+function prev(){const e=document.getElementById('pv');if(e)e.innerHTML=RF.img?`<img src="${RF.img}" alt="ตัวอย่างรูป" style="width:100%;border-radius:12px;margin-top:10px;display:block"><button class="chip" style="margin:8px 0 0" onclick="RF.img=null;prev()">🗑️ ลบรูป</button>`:''}
+function sendRep(){const n=N[RF.node];n.lv=RF.lv;const d=new Date();upd=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+ R.unshift({id:Date.now(),node:n.id,lv:n.lv,user:'คุณ 🙋',time:upd,note:RF.note.trim(),img:RF.img?{t:'photo',src:RF.img}:null});
+ RF.img=null;RF.note='';FV='feed';FA=n.id;FM='🎉 ขอบคุณที่ช่วยแจ้ง! รายงานของคุณอยู่ด้านล่างแล้ว';draw()}
+function feedView(){
+ const list=R.filter(r=>FA<0||r.node==FA);
+ const chips=[[-1,'ทั้งหมด']].concat(N.map(n=>[n.id,n.n])).map(([k,t])=>`<button class="chip ${FA==k?'on':''}" style="white-space:nowrap;flex:none;margin:0" onclick="FA=${k};draw()">${t}</button>`).join('');
+ const m=FM?`<div class="card" style="background:var(--gl);border-color:#bfe3cd;margin:0 0 12px"><h3>${FM}</h3></div>`:'';FM='';
+ return m+`<h2>👥 รายงานจากเพื่อนๆ</h2><p style="color:#5b6a62;font-size:14px;margin:-6px 0 10px">เลือกพื้นที่ แล้วกดดูภาพตอนนั้นได้</p><div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:8px">${chips}</div>`+(list.length?list.map(repCard).join(''):'<div class="card"><p>ยังไม่มีรายงานในพื้นที่นี้ 🍃</p></div>');
+}
+function repCard(r){const n=N[r.node],k=st(r.lv),o=OP.has(r.id);
+ return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><b>${r.user}</b><small style="color:#5b6a62">${r.time} น.</small></div>
+ <p style="margin:4px 0"><i class="dot" style="background:${col[k]}"></i>${n.n} · ${r.lv} ซม. (${name[k]})</p>
+ ${r.note?`<p style="color:var(--tx)">${esc(r.note)}</p>`:''}
+ ${r.img?`<button class="chip" style="margin:10px 0 0" onclick="tgImg(${r.id})">${o?'🙈 ซ่อนภาพ':'🖼️ ดูภาพตอนนั้น'}</button>${o?imgHtml(r):''}`:'<p style="margin-top:6px;font-size:12px">ไม่มีภาพแนบ</p>'}</div>`}
+function imgHtml(r){return r.img.t=='photo'?`<img src="${r.img.src}" alt="ภาพที่แนบ" style="width:100%;border-radius:12px;margin-top:10px;display:block">`:`<div style="margin-top:10px;border-radius:12px;overflow:hidden">${scene(r.img.lv)}</div><p style="font-size:11px;margin-top:4px">ภาพจำลอง (ตัวอย่าง)</p>`}
+function tgImg(id){OP.has(id)?OP.delete(id):OP.add(id);draw()}
+function goFeed(id){tab=1;FV='feed';FA=id;document.getElementById('main').scrollTop=0;draw()}
+const HT=['🚶 ติดน้ำ ไปต่อไม่ได้','🚗 ต้องการรับส่ง','🎒 ต้องการของใช้','🩹 บาดเจ็บ/ไม่สบาย','💬 อื่นๆ'],HF={type:0,node:0,note:''};
+const hm=()=>{const d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')};
+const HL=[
+{id:101,user:'น้องใบไม้ 🌿',node:5,type:1,note:'ติดน้ำที่ศูนย์อาหาร ไม่มีรถกลับหอ',time:'18:02',st:'wait'},
+{id:102,user:'พี่ต้นกล้า 🌱',node:6,type:2,note:'ต้องการถุงกันน้ำสำหรับใส่ของมีค่า',time:'17:45',st:'wait'},
+{id:103,user:'น้องข้าวหอม 🍚',node:4,type:0,note:'ทางหน้าตึกน้ำขัง ขอเพื่อนช่วยพยุงไปหอสมุด',time:'17:20',st:'help',who:'พี่ภูผา ⛰️'}];
+function helpView(){
+ const t=HT.map((x,i)=>`<button class="chip ${HF.type==i?'on':''}" onclick="HF.type=${i};draw()">${x}</button>`).join('');
+ const mine=HL.filter(h=>h.mine),other=HL.filter(h=>!h.mine);
+ return `<h2>🆘 ขอความช่วยเหลือ</h2>
+ <div class="card" style="background:#fff4f2;border-color:#f3cfc9;margin:0 0 12px"><h3>🚨 เหตุฉุกเฉิน โทรเลย</h3><p>เจ็บป่วยรุนแรงหรืออันตรายถึงชีวิต โทร <b style="color:#c33">1669</b> (การแพทย์ฉุกเฉิน) หรือ <b style="color:#c33">191</b> ก่อน อย่ารอคำตอบในแอป</p></div>
+ <div class="sec" style="margin-top:0">ต้องการความช่วยเหลือเรื่องอะไร</div>${t}
+ <label>คุณอยู่ที่ไหน 📍</label><select onchange="HF.node=+this.value">${N.map(n=>`<option value="${n.id}" ${HF.node==n.id?'selected':''}>${n.n}</option>`).join('')}</select>
+ <label>รายละเอียด</label><textarea placeholder="เช่น ติดอยู่ที่ไหน ต้องการอะไร" oninput="HF.note=this.value">${esc(HF.note)}</textarea>
+ <button class="btn" onclick="sendHelp()">ส่งคำขอความช่วยเหลือ 🙏</button>
+ ${mine.length?'<div class="sec">📌 คำขอของฉัน</div>'+mine.map(hCard).join(''):''}
+ <div class="sec">🤝 เพื่อนๆ ที่ต้องการความช่วยเหลือ</div>${other.map(hCard).join('')}`;
+}
+function hCard(h){const n=N[h.node],stt={wait:'⏳ รอความช่วยเหลือ',help:`🙋 ${h.who||'มีคน'} กำลังไปช่วย`,done:'✅ ช่วยเหลือเรียบร้อย'}[h.st];
+ const act=h.mine?(h.st!='done'?`<button class="chip" style="margin:8px 0 0" onclick="hSet(${h.id},'done')">✅ ได้รับความช่วยเหลือแล้ว</button>`:''):(h.st=='wait'?`<button class="btn" style="margin-top:10px" onclick="hSet(${h.id},'help','คุณ')">🙋 ฉันช่วยได้</button>`:'');
+ return `<div class="card"><div style="display:flex;justify-content:space-between"><b>${h.user}</b><small style="color:#5b6a62">${h.time} น.</small></div><p style="margin:4px 0">${HT[h.type]} · 📍${n.n}</p>${h.note?`<p style="color:var(--tx)">${esc(h.note)}</p>`:''}<p style="margin-top:6px"><b style="color:var(--g)">${stt}</b></p>${act}</div>`}
+function hSet(id,v,who){const h=HL.find(x=>x.id==id);h.st=v;if(who)h.who=who;draw()}
+function sendHelp(){const id=Date.now();HL.unshift({id,user:'คุณ 🙋',node:HF.node,type:HF.type,note:HF.note.trim(),time:hm(),st:'wait',mine:true});HF.note='';draw();
+ setTimeout(()=>{const x=HL.find(a=>a.id==id);if(x&&x.st=='wait'){x.st='help';x.who='น้องสายน้ำ 💙';draw()}},4000)}
+const UM=[{node:1,n:'ตึกอำนวยการ',w:'จุดรับร่มหน้าล็อบบี้',st:30,h:'08:00–20:00'},{node:3,n:'หอสมุดกลาง',w:'เคาน์เตอร์ประชาสัมพันธ์',st:24,h:'08:00–21:00'},{node:2,n:'ประตูพหลโยธิน',w:'ป้อมยาม',st:12,h:'24 ชม.'},{node:5,n:'ศูนย์อาหารกลาง',w:'ทางเข้าด้านตะวันตก',st:3,h:'07:00–19:00'},{node:0,n:'หอพักนิสิต',w:'ล็อบบี้',st:18,h:'24 ชม.'},{node:8,n:'ประตูงามวงศ์วาน',w:'ป้อมยาม',st:0,h:'24 ชม.'}];
+const UM0=UM.map(u=>u.st);let MYU=0;
+function umB(i){if(MYU||!UM[i].st)return;UM[i].st--;MYU=i+1;draw()}
+function umR(i){if(!MYU)return;UM[i].st++;MYU=0;draw()}
+function buddyView(){
+ const sc=SC[S.sc],f=N.filter(n=>st(n.lv)=='f').length;
+ const say=S.sc=='now'?(f?`มีจุดท่วมขัง ${f} จุด รับร่มก่อนออกเดินนะ`:'ตอนนี้ยังไม่มีฝน แต่รับร่มติดมือไว้ก่อนก็ดี'):`${sc.n}: ${sc.tip}`;
+ const L=UM.map((u,i)=>({u,i,k:st(N[u.node].lv)})).sort((x,y)=>(y.u.st>0)-(x.u.st>0)||(x.k=='f')-(y.k=='f'));
+ const mine=MYU?`<div class="card" style="margin:0 0 12px;background:#fff7e0;border-color:#f4e2a8"><h3>☂️ คุณกำลังยืมร่มอยู่ 1 คัน</h3><p>ยืมจาก ${UM[MYU-1].n} · คืนที่จุดไหนก็ได้ กดปุ่มคืนร่มด้านล่าง</p></div>`:'';
+ return `<h2>☂️ จุดรับร่มฟรี</h2><div class="card" style="margin:0 0 12px;background:var(--gl);border-color:#bfe3cd"><h3>🦉 Buddy</h3><p style="color:var(--tx)">${say}</p></div>${mine}
+ <p class="upd" style="margin-top:0">ยืมฟรี ใช้แล้วคืนได้ทุกจุด · เรียงตามร่มที่เหลือและความปลอดภัยของทาง (ข้อมูลจำลอง)</p>`+L.map(({u,i,k})=>{
+  const sk=u.st==0?['ร่มหมด','#c33']:u.st<=5?['ใกล้หมด เหลือ '+u.st+' คัน','#b98400']:['เหลือ '+u.st+' คัน','var(--ok)'];
+  const btn=MYU?`<button class="chip" style="margin:10px 0 0" onclick="umR(${i})">↩️ คืนร่มที่จุดนี้</button>`:(u.st?`<button class="btn" style="margin-top:10px;padding:10px" onclick="umB(${i})">☂️ ยืมร่ม</button>`:'');
+  return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px"><b>${S.home==u.node?'⭐ ':''}${u.n}</b><b style="color:${sk[1]};font-size:13px;white-space:nowrap">${sk[0]}</b></div><p style="margin:4px 0">📍 ${u.w} · 🕒 ${u.h}</p><p style="font-size:13px"><i class="dot" style="background:${col[k]}"></i>พื้นที่${name[k]} · น้ำ ${N[u.node].lv} ซม.${k=='f'?' · ⚠️ ระวังทางไปจุดนี้':''}</p>${btn}</div>`}).join('');
+}
+function ask(i){
+ const c=cnt(),bad=N.filter(n=>st(n.lv)=='f').map(n=>n.n).join(', ')||'ไม่มี';
+ const a=[`ตอนนี้ท่วมขัง ${c.f} จุด (${bad}) เฝ้าระวัง ${c.w} จุด ถ้าติดอยู่ตรงไหน กดแท็บขอช่วยได้เลยนะ`,(S.sc!='now'?`ตอนนี้จำลองสถานการณ์${SC[S.sc].n}: ${SC[S.sc].tip} `:'')+'พกร่มหรือเสื้อกันฝน ใส่รองเท้ากันลื่น เก็บของมีค่าใส่ถุงกันน้ำ และเช็กแผนที่ก่อนออกจากห้อง','อย่าเดินลุยน้ำที่ไม่รู้ความลึก ระวังไฟฟ้า ถอยไปทางอื่น แล้วกดรายงานระดับน้ำให้เพื่อน ๆ'];
+ ba.innerHTML=`<div class="card"><h3>🦉 Buddy</h3><p style="color:var(--tx)">${a[i]}</p></div>`;
+}
+const Q=[['ระดับน้ำกี่ ซม. ขึ้นไป ที่ถือว่า "ท่วมขัง" ในแอปนี้?',['5 ซม.','15 ซม.','30 ซม.'],1],
+['เจอสายไฟตกลงในน้ำท่วม ควรทำอย่างไร?',['ใช้ไม้เขี่ยออก','ลุยผ่านเร็ว ๆ','ถอยห่างและแจ้งเจ้าหน้าที่'],2],
+['ก่อนเดินผ่านทางที่มีน้ำ ควรทำอะไร?',['ดูแผนที่แล้วเลือกเส้นทางอื่น','เดินตามเพื่อน','วิ่งผ่านเลย'],0],
+['ฝนฟ้าคะนองและมีฟ้าผ่า ควรอยู่ที่ไหน?',['ใต้ต้นไม้ใหญ่','ในอาคารที่มั่นคง','กลางสนามโล่ง'],1],
+['ถ้าต้องขับรถผ่านทางที่น้ำท่วมสูงและไม่รู้ความลึก ควรทำอย่างไร?',['ขับผ่านเร็ว ๆ','ขับตามรถคันหน้า','หาเส้นทางอื่น ไม่ขับลุย'],2],
+['เจ็บป่วยรุนแรงช่วงน้ำท่วม ควรโทรเบอร์ใดก่อน?',['1111','1300','1669'],2],
+['ฝนตกหนัก ควรทำอย่างไรกับโทรศัพท์และเอกสารสำคัญ?',['วางไว้บนพื้นห้อง','ใส่ถุงกันน้ำและเก็บที่สูง','ทิ้งไว้ในกระเป๋าที่เปียก'],1],
+['เห็นเพื่อนติดน้ำและต้องการความช่วยเหลือ ควรทำอย่างไร?',['แจ้งเจ้าหน้าที่หรือกดขอช่วยในแอป โดยไม่เสี่ยงลุยน้ำ','ลุยน้ำเข้าไปช่วยทันที','ถ่ายคลิปลงโซเชียลก่อน'],0],
+['น้ำกำลังจะเข้าห้อง ควรทำอย่างไรกับอุปกรณ์ไฟฟ้า?',['ถอดปลั๊กและย้ายขึ้นที่สูง','เสียบชาร์จไว้ตามปกติ','เช็ดด้วยผ้าเปียก'],0],
+['จุดสีฟ้าบนแผนที่ KU Flood หมายถึงอะไร?',['ผ่านได้ปกติ','เฝ้าระวัง','ท่วมขัง'],2]];
+const RK=[[10,'นักรบน้ำท่วมเกษตรศาสตร์','🏆','เต็มสิบ! พร้อมช่วยเพื่อน ๆ รับมือน้ำท่วมแล้ว'],[8,'ผู้พิทักษ์ KU','🥇','เก่งมาก รู้ทันน้ำท่วมเกือบครบเลย'],[5,'เพื่อนรู้ทัน','🌱','ทำได้ดี ทบทวนอีกนิดจะยิ่งแม่น'],[0,'นักเรียนรู้น้ำท่วม','💪','เริ่มต้นได้ดี ลองทำอีกครั้งนะ']];
+const confetti=()=>Array.from({length:24},(_,i)=>`<i class="p" style="left:${(i*41+7)%100}%;background:${['#00693E','#2f7fd0','#e0a100','#f27ca5','#9be8c4'][i%5]};animation-delay:${(i%8)*.35}s;animation-duration:${2.6+(i%5)*.5}s"></i>`).join('');
+function quizPart(){
+ if(done){const r=RK.find(x=>score>=x[0]);
+  return `<div class="cf">${confetti()}<img src="${ICON}" alt="KU Flood"><h2>🎉 ยินดีด้วย! ทำครบแล้ว</h2><div class="sc">${score}<small> / ${Q.length} ข้อ</small></div><div class="stars">${Array.from({length:Q.length},(_,i)=>i<score?'⭐':'☆').join('')}</div><div class="bdg">${r[2]} ${r[1]}</div><p style="color:#44534b;font-size:14px">${r[3]}</p></div><button class="btn" onclick="qi=0;score=0;done=false;draw()">ทำใหม่อีกครั้ง 🔄</button>`}
+ const q=Q[qi];return `<h2>📝 ทดสอบความรู้ (${qi+1}/${Q.length})</h2><div class="pg"><i style="width:${qi/Q.length*100}%"></i></div><div class="card" style="margin-top:0"><h3>${q[0]}</h3>${q[1].map((o,i)=>`<button class="opt" onclick="ans(${i},this)">${o}</button>`).join('')}</div>`;
+}
+
+const SV={rate:0,freq:'',feats:[],text:'',sent:false,err:false};
+const FR=['ทุกวัน','สัปดาห์ละ 2–3 ครั้ง','นานๆ ครั้ง','เพิ่งเริ่มใช้'],FE=['🗺️ แผนที่','➕ แจ้งระดับน้ำ','🆘 ขอความช่วยเหลือ','💬 Buddy','📝 ทดสอบ'];
+function surveyView(){
+ const h='<h2>📋 แบบสำรวจการใช้แอป</h2>';
+ if(SV.sent)return h+`<div class="card" style="background:var(--gl);border-color:#bfe3cd"><h3>🎉 ขอบคุณที่ตอบแบบสำรวจ</h3><p>คะแนน ${['😞','😕','😐','🙂','🤩'][SV.rate-1]} ${SV.rate}/5 · ใช้งาน: ${SV.freq||'-'}</p></div><button class="btn" onclick="Object.assign(SV,{rate:0,freq:'',feats:[],text:'',sent:false,err:false});draw()">ตอบใหม่ 🔄</button>`;
+ return h+`<div class="card sv" style="margin-top:0"><q style="margin-top:0">1. พอใจกับแอปแค่ไหน?</q>
+ <div class="faces">${['😞','😕','😐','🙂','🤩'].map((e,i)=>`<button class="${SV.rate==i+1?'on':''}" onclick="SV.rate=${i+1};draw()">${e}</button>`).join('')}</div>
+ ${SV.err?'<p style="color:#c33;margin-top:6px">กรุณาให้คะแนนก่อนส่งนะ</p>':''}
+ <q>2. ใช้แอปบ่อยแค่ไหน?</q>${FR.map(f=>`<button class="opt ${SV.freq==f?'on':''}" onclick="SV.freq='${f}';draw()">${f}</button>`).join('')}
+ <q>3. ฟีเจอร์ที่ใช้บ่อย (เลือกได้หลายข้อ)</q><div style="margin-top:8px">${FE.map(f=>`<button class="chip ${SV.feats.includes(f)?'on':''}" onclick="svt('${f}')">${f}</button>`).join('')}</div>
+ <q>4. อยากให้ปรับปรุงอะไร? 💡</q><textarea placeholder="พิมพ์ข้อเสนอแนะที่นี่" oninput="SV.text=this.value">${SV.text}</textarea></div>
+ <button class="btn" onclick="sendSv()">ส่งแบบสำรวจ 📨</button>`;
+}
+function svt(f){const a=SV.feats,i=a.indexOf(f);i<0?a.push(f):a.splice(i,1);draw()}
+function sendSv(){if(!SV.rate){SV.err=true;draw();return}SV.err=false;SV.sent=true;draw()}
+let V4=null;
+function quizView(){
+ if(V4){return `<button class="chip" onclick="V4=null;draw()">‹ กลับ</button>`+(V4=='quiz'?quizPart():surveyView())}
+ const c=(k,e,t,d)=>`<button class="opt" style="display:flex;align-items:center;gap:14px;padding:16px;margin-top:12px;border-radius:16px;background:linear-gradient(135deg,#e8f6ee,#fff);border-color:#bfe3cd" onclick="V4='${k}';draw()"><span style="font-size:34px">${e}</span><span style="flex:1"><b style="display:block;font-size:16px">${t}</b><small style="color:#5b6a62">${d}</small></span><span style="color:var(--g);font-size:22px">›</span></button>`;
+ return `<h2>📚 ทดสอบและสำรวจ</h2><p style="color:#5b6a62;font-size:14px">แตะเพื่อเริ่มได้เลย</p>`+c('quiz','📝','ทดสอบความรู้','คำถาม 10 ข้อ เรื่องรับมือน้ำท่วม')+c('survey','📋','แบบสำรวจการใช้แอป','ช่วยบอกเราว่าแอปเป็นยังไง')}
+function ans(i,el){
+ const q=Q[qi];document.querySelectorAll('.opt').forEach((b,k)=>{b.disabled=true;if(k==q[2])b.classList.add('right')});
+ if(i==q[2])score++;else el.classList.add('wrong');
+ setTimeout(()=>{qi++;if(qi>=Q.length)done=true;draw()},900);
+}
+
+const vb=()=>{const e=document.getElementById('msv');if(e)e.setAttribute('viewBox',`${VX} ${VY} ${W/Z} ${H/Z}`)};
+function clamp(){VX=Math.min(Math.max(VX,0),W-W/Z);VY=Math.min(Math.max(VY,0),H-H/Z)}
+function zoomAt(f,fx,fy){const nz=Math.min(4,Math.max(1,Z*f));VX=fx-(fx-VX)*Z/nz;VY=fy-(fy-VY)*Z/nz;Z=nz;clamp();vb()}
+function zoomBtn(f){if(!f){Z=1;VX=0;VY=0;vb();return}zoomAt(f,VX+W/Z/2,VY+H/Z/2)}
+const P=new Map();
+function bindMap(){const e=document.getElementById('msv');if(!e)return;
+ e.addEventListener('pointerdown',ev=>{P.set(ev.pointerId,[ev.clientX,ev.clientY]);moved=false;mv=0});
+ e.addEventListener('wheel',ev=>{ev.preventDefault();const r=e.getBoundingClientRect();zoomAt(ev.deltaY<0?1.15:1/1.15,VX+(ev.clientX-r.left)/r.width*W/Z,VY+(ev.clientY-r.top)/r.height*H/Z)},{passive:false})}
+window.addEventListener('pointermove',ev=>{const e=document.getElementById('msv');if(!e||!P.has(ev.pointerId))return;
+ const r=e.getBoundingClientRect(),o=P.get(ev.pointerId),other=[...P.entries()].find(([id])=>id!=ev.pointerId);
+ P.set(ev.pointerId,[ev.clientX,ev.clientY]);
+ if(other){moved=true;const q=other[1],d0=Math.hypot(o[0]-q[0],o[1]-q[1]),d1=Math.hypot(ev.clientX-q[0],ev.clientY-q[1]);
+  if(d0>0)zoomAt(d1/d0,VX+((ev.clientX+q[0])/2-r.left)/r.width*W/Z,VY+((ev.clientY+q[1])/2-r.top)/r.height*H/Z)}
+ else{const dx=ev.clientX-o[0],dy=ev.clientY-o[1];mv+=Math.abs(dx)+Math.abs(dy);if(mv>6)moved=true;VX-=dx*(W/Z)/r.width;VY-=dy*(H/Z)/r.height;clamp();vb()}});
+['pointerup','pointercancel'].forEach(t=>window.addEventListener(t,ev=>P.delete(ev.pointerId)));
+function tg(k){S[k]=!S[k];draw()}
+function resetData(){UM.forEach((u,i)=>u.st=UM0[i]);MYU=0;S.sc='now';LIVE=null;N.forEach((n,i)=>n.lv=N0[i]);upd='18:12';sel=null;Z=1;VX=0;VY=0;TH=15;draw()}
+function settingsView(){
+ const sw=k=>`<button class="sw ${S[k]?'on':''}" onclick="tg('${k}')" aria-label="สลับ"></button>`;
+ return `<h2>⚙️ ตั้งค่า</h2>
+ <div class="sec">🔔 การแจ้งเตือน</div><div class="card" style="margin-top:0">
+ <div class="row"><div><b>เตือนเมื่อมีน้ำท่วมขัง</b><small>แจ้งทันทีเมื่อมีจุดท่วม</small></div>${sw('nf')}</div>
+ <div class="row"><div><b>เตือนจุดเฝ้าระวัง</b><small>แจ้งเมื่อระดับน้ำเริ่มสูง</small></div>${sw('nw')}</div>
+ <div class="row"><div><b>เสียงแจ้งเตือน</b></div>${sw('snd')}</div></div>
+ <div class="sec">📍 จุดที่ติดตาม</div><div class="card" style="margin-top:0"><select onchange="S.home=+this.value">${N.map(n=>`<option value="${n.id}" ${S.home==n.id?'selected':''}>${n.n}</option>`).join('')}</select><p style="margin-top:8px">แสดง ⭐ ที่จุดนี้บนแผนที่</p></div>
+ <div class="sec">🎨 การแสดงผล</div><div class="card" style="margin-top:0">
+ <div class="row"><div><b>เอฟเฟกต์ฝนบนแผนที่</b><small>ฝนตก ฟ้าแลบ ตามสถานการณ์</small></div>${sw('fx')}</div>
+ <div class="row"><div><b>หน้าอารมณ์บนแผนที่</b><small>😊 😐 😟 ตามระดับน้ำ</small></div>${sw('faces')}</div>
+ <div class="row" style="display:block"><b>เกณฑ์ท่วมขัง: <span id="thv">${TH}</span> ซม.</b><input type="range" min="5" max="30" value="${TH}" oninput="TH=+this.value;thv.textContent=TH" style="margin-top:8px"></div>
+ <div class="row"><b>ขนาดตัวอักษร</b><div class="seg">${[['เล็ก',.9],['ปกติ',1],['ใหญ่',1.15]].map(([t,v])=>`<button class="${S.fs==v?'on':''}" onclick="S.fs=${v};draw()">${t}</button>`).join('')}</div></div></div>
+ <div class="sec">ℹ️ เกี่ยวกับ</div><div class="card" style="margin-top:0"><h3>KU Flood 🌊 v0.1</h3><p>โปรโตไทป์ ใช้ข้อมูลจำลอง ไม่ใช่ข้อมูลจริงของมหาวิทยาลัย</p><button class="btn" style="margin-top:12px" onclick="resetData()">รีเซ็ตข้อมูลจำลอง 🔄</button></div>`;
+}
+function pick(i){if(moved)return;sel=i;draw()}
+function draw(){
+ const m=document.getElementById('main'),y=m.scrollTop;m.style.zoom=S.fs;
+ m.innerHTML=[mapView,reportView,helpView,buddyView,quizView,settingsView][tab]();m.scrollTop=y;
+ document.getElementById('nav').innerHTML=tabs.map((t,i)=>`<button class="${i==tab?'on':''}" onclick="tab=${i};document.getElementById('main').scrollTop=0;draw()"><i>${t[1]}</i>${t[0]}</button>`).join('');
+ if(tab==0)bindMap();if(tab==1)prev();
+}
+draw();
+</script>
+<script>
+if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+</script>
+</body>
+</html>
